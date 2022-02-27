@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sortOrder = params[:sort]
+    sortOrder = params[:sort] || session[:sort]
     if sortOrder == 'title'
       @title = 'hilite'
       sortingOrder = 'title'
@@ -19,7 +19,7 @@ class MoviesController < ApplicationController
       sortingOrder = 'release_date'
     end
     @all_ratings = Movie.all_ratings
-    @selected_ratings = params[:ratings] || {}
+    @selected_ratings = params[:ratings] || session[:ratings] || {}
     if @selected_ratings == {}
       @movies = Movie.all.order(sortingOrder)
     else
